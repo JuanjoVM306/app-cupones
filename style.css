@@ -1,0 +1,206 @@
+:root {
+  --primary: #e63946;
+  --secondary: #f4a261;
+  --bg: #fff0f3;
+  --card-bg: #ffffff;
+  --text: #2b2d42;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+h2, h3 {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ffccd5;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+}
+
+.btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  width: 100%;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-ws {
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.instructions-box {
+  text-align: left;
+  background: #fff0f3;
+  border-left: 4px solid var(--primary);
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.timer-card {
+  background: #ffe6e8;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.timer-display {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: 2px;
+  margin-top: 10px;
+}
+
+/* JUEGO DE CARTAS Y MEZCLA */
+.cards-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  height: 220px;
+  margin: 15px 0;
+}
+
+.card-item {
+  width: 110px;
+  height: 180px;
+  position: absolute;
+  perspective: 1000px;
+  transition: transform 0.4s ease-in-out, left 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.card-item.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.card-front {
+  background: white;
+  border: 2px solid var(--primary);
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.card-back {
+  background: linear-gradient(135deg, var(--primary), #ff758c);
+  color: white;
+  font-size: 1.8rem;
+  transform: rotateY(180deg);
+}
+
+.coupon-display-card {
+  border: 2px dashed var(--primary);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  background: #fff8f8;
+}
+
+.coupon-display-card.used {
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.poem-card {
+  background: #fff8f8;
+  border-left: 4px solid var(--primary);
+  padding: 20px;
+  border-radius: 12px;
+  font-style: italic;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.admin-section {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  text-align: left;
+}
