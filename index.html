@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espacio Especial 💕</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 1. PANTALLA DE LOGIN -->
+    <div id="screen-login" class="screen">
+      <h2>¡Bienvenid@! ❤️</h2>
+      <p>Ingresa tu nombre o clave de acceso:</p>
+      <input type="text" id="login-input" class="input-field" placeholder="Escribe aquí...">
+      <button class="btn" onclick="handleLogin()">Ingresar</button>
+    </div>
+
+    <!-- 2. INSTRUCCIONES PRIMERA VEZ -->
+    <div id="screen-first-instructions" class="screen hidden">
+      <h2>✨ ¿Cómo funciona este detalle? ✨</h2>
+      <div class="instructions-box">
+        <p><strong>1. Un detalle cada día:</strong> Todos los días se habilitará una nueva sorpresa o minijuego.</p>
+        <p><strong>2. Versos y Cupones:</strong> Podrás ganar hermosos poemas o cupones especiales para disfrutar juntos.</p>
+
+        <p><strong>3. Cupones de Un Solo Uso:</strong> Cuando presiones "Usar" en un cupón de tu inventario, se descargará una foto lista para enviármela por WhatsApp.</p>
+        <p><strong>4. Paciencia y Amor:</strong> Hay una espera de 24 horas entre cada detalle diario.</p>
+      </div>
+      <button class="btn" onclick="confirmFirstTimeInstructions()">¡Entendido, empezar!</button>
+    </div>
+
+    <!-- 3. MENÚ PRINCIPAL DE NICOL -->
+    <div id="screen-user-menu" class="screen hidden">
+      <h2>¡Hola de nuevo, Nicol! 💕</h2>
+      <p>¿Lista para la sorpresa de hoy?</p>
+      <button class="btn" onclick="attemptStartDailyGame()">🎮 Empezar juego de hoy</button>
+      <button class="btn btn-secondary" onclick="showScreen('screen-instructions-view')">📖 Instrucciones</button>
+      <button class="btn btn-secondary" onclick="showScreen('screen-inventory')">🎁 Mis Cupones Guardados</button>
+    </div>
+
+    <!-- 4. PANTALLA DE INSTRUCCIONES (MENÚ) -->
+    <div id="screen-instructions-view" class="screen hidden">
+      <h2>📖 Instrucciones del Juego</h2>
+      <div class="instructions-box">
+        <p><strong>• Desbloqueo Diario:</strong> Cada 24 horas podrás reclamar tu recompensa diaria.</p>
+        <p><strong>• Juego de Cartas:</strong> Al salir opciones de cupones, verás 3 tarjetas. Al dar "Continuar", se voltearán y mezclarán frente a ti como el juego de los vasos. Sigue la que quieras con la mirada.</p>
+        <p><strong>• Canje por WhatsApp:</strong> Al dar clic en "Usar", el cupón genera una imagen PNG para enviarla por WhatsApp.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="showScreen('screen-user-menu')">⬅️ Volver al menú</button>
+    </div>
+
+    <!-- 5. TEMPORIZADOR AMOROSO (24 HORAS) -->
+    <div id="screen-cooldown" class="screen hidden">
+      <div class="timer-card">
+        <h3>⏳ Un poquito de paciencia, mi amor...</h3>
+        <p>Aún no han pasado las 24 horas desde tu última sorpresa. Descansa un poco y vuelve cuando el contador llegue a cero. ¡El siguiente detalle te estará esperando!</p>
+        <div id="timer-count" class="timer-display">00:00:00</div>
+      </div>
+      <button class="btn btn-secondary" style="margin-top:20px;" onclick="showScreen('screen-user-menu')">Volver al menú</button>
+    </div>
+
+    <!-- 6. JUEGO DE CARTAS Y MEZCLA (3 CUPONES) -->
+    <div id="screen-shuffle-game" class="screen hidden">
+      <h2>✨ ¡Elige tu Recompensa! ✨</h2>
+      <p id="shuffle-subtitle">Lee los 3 cupones y presiona continuar cuando estés lista.</p>
+      
+      <div class="cards-container" id="cards-container">
+        <!-- Las 3 cartas se inyectan dinámicamente -->
+      </div>
+
+      <button id="btn-start-shuffle" class="btn" onclick="startShuffleProcess()">Continuar y Mezclar</button>
+    </div>
+
+    <!-- 7. MUESTRA DE VERSO / POEMA OBTENIDO -->
+    <div id="screen-reward-poem" class="screen hidden">
+      <h2>✨ Un Verso Para Ti ✨</h2>
+      <div class="poem-card" id="poem-content-area"></div>
+      <button class="btn" onclick="showScreen('screen-user-menu')">Guardar y Volver</button>
+    </div>
+
+    <!-- 8. INVENTARIO DE CUPONES (PARA NICOL) -->
+    <div id="screen-inventory" class="screen hidden">
+      <h2>🎁 Mis Cupones Guardados</h2>
+      <div id="my-coupons-list">Cargando inventario...</div>
+      <button class="btn btn-secondary" onclick="showScreen('screen-user-menu')">Volver al Menú</button>
+    </div>
+
+    <!-- 9. PANEL DE ADMINISTRADOR -->
+    <div id="screen-admin" class="screen hidden">
+      <h2>🛠️ Panel de Administración</h2>
+      
+      <div class="admin-section">
+        <button class="btn" onclick="adminBypassCooldown()">🔓 Desbloquear acceso inmediato de 24h para Nicol</button>
+      </div>
+
+      <div class="admin-section">
+        <h3>Añadir Nuevo Poema / Verso</h3>
+        <input type="text" id="admin-poem-title" class="input-field" placeholder="Título">
+        <textarea id="admin-poem-body" class="input-field" rows="3" placeholder="Contenido del verso..."></textarea>
+        <button class="btn" onclick="adminCreatePoem()">Publicar Verso</button>
+      </div>
+
+      <div class="admin-section">
+        <h3>Añadir Nuevo Cupón Base</h3>
+        <input type="text" id="admin-coupon-title" class="input-field" placeholder="Título del cupón">
+        <input type="text" id="admin-coupon-desc" class="input-field" placeholder="Descripción del cupón">
+        <button class="btn" onclick="adminCreateCoupon()">Crear Cupón</button>
+      </div>
+
+      <div class="admin-section">
+        <h3 style="color: var(--primary);">Cupones Usados</h3>
+        <div id="admin-used-coupons-list">Cargando...</div>
+      </div>
+
+      <button class="btn btn-secondary" onclick="showScreen('screen-login')">Cerrar Sesión Admin</button>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
